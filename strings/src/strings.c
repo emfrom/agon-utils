@@ -4,93 +4,81 @@
 
 void show_usage(char *prog_name)
 {
-	printf("Usage: %s [-hn min-len] filename\r\n", prog_name);
-	printf("-h show this help message\r\n");
-	printf("-n strings at least min-len long (default: 4)\r\n");
+    printf("Usage: %s [-hn min-len] filename\r\n", prog_name);
+    printf("-h show this help message\r\n");
+    printf("-n strings at least min-len long (default: 4)\r\n");
 }
 
-void show_str(size_t str_len, FILE *file)
+void show_str(size_t str_len, FILE * file)
 {
-	char ch;
-	char buf[1024];
-	size_t cur_len = 0;
+    char ch;
+    char buf[1024];
+    size_t cur_len = 0;
 
-	while (fread(&ch, 1, 1, file) > 0)
-	{
-		if ((int)ch > 31 && (int)ch < 128)
-		{
-			buf[cur_len++] = ch;
-		}
-		else if (cur_len >= str_len)
-		{
-			fwrite(buf, 1, cur_len, stdout);
-			printf("\r\n");
-			cur_len = 0;
-		}
-		else
-		{
-			cur_len = 0;
-		}
-	}
+    while (fread(&ch, 1, 1, file) > 0) {
+        if ((int) ch > 31 && (int) ch < 128) {
+            buf[cur_len++] = ch;
+        }
+        else if (cur_len >= str_len) {
+            fwrite(buf, 1, cur_len, stdout);
+            printf("\r\n");
+            cur_len = 0;
+        }
+        else {
+            cur_len = 0;
+        }
+    }
 }
 
 int main(int argc, char *argv[])
 {
-	FILE *file = NULL;
-	char *filename = NULL;
-	int parsed_len = 0;
-	size_t str_len = 4;
+    FILE *file = NULL;
+    char *filename = NULL;
+    int parsed_len = 0;
+    size_t str_len = 4;
 
-	for (int i = 1; i != argc; i++)
-	{
-		if (strcmp(argv[i], "-h") == 0)
-		{
-			show_usage(argv[0]);
+    for (int i = 1; i != argc; i++) {
+        if (strcmp(argv[i], "-h") == 0) {
+            show_usage(argv[0]);
 
-			return 0;
-		}
-		else if (strncmp(argv[i], "-n", 2) == 0)
-		{
-			parsed_len = atoi(argv[++i]);
+            return 0;
+        }
+        else if (strncmp(argv[i], "-n", 2) == 0) {
+            parsed_len = atoi(argv[++i]);
 
-			if (parsed_len <= 0)
-			{
-				fprintf(stderr, "The min-len must be positive");
+            if (parsed_len <= 0) {
+                fprintf(stderr, "The min-len must be positive");
 
-				return 1;
-			}
+                return 1;
+            }
 
-			str_len = parsed_len;
-		}
-		else if (!filename)
-		{
-			filename = argv[i];
-		}
-		else
-		{
-			show_usage(argv[0]);
+            str_len = parsed_len;
+        }
+        else if (!filename) {
+            filename = argv[i];
+        }
+        else {
+            show_usage(argv[0]);
 
-			return 0;
-		}
-	}
+            return 0;
+        }
+    }
 
-	if (filename == NULL)
-	{
-		show_usage(argv[0]);
+    if (filename == NULL) {
+        show_usage(argv[0]);
 
-		return 0;
-	}
+        return 0;
+    }
 
-	if (!(file = fopen(filename, "r")))
-	{
-		fprintf(stderr, "Error opening file");
+    if (!(file = fopen(filename, "r"))) {
+        fprintf(stderr, "Error opening file");
 
-		return 1;
-	}
+        return 1;
+    }
 
-	show_str(str_len, file);
-	printf("\r\n");
-	fclose(file);
+    show_str(str_len, file);
+    printf("\r\n");
+    fclose(file);
 
-	return 0;
+    return 0;
 }
