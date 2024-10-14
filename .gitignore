@@ -1,1 +1,7 @@
+echo/bin/*
+grep/bin/*
+head/bin/*
+strings/*
 tail/bin/*
+wc/bin/*
+
