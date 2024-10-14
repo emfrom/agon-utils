@@ -288,7 +288,7 @@ void show_lines(FILE * file, int lines) {
 
 /**
  * main() using arguments
- * Argument processing (AgDev) is not used
+ * Extended argument processing (AgDev) is not used
  * 
  */
 int main(int argc, char *argv[]) {
@@ -297,44 +297,62 @@ int main(int argc, char *argv[]) {
     int parsed_lines = 0;
     size_t lines = 10;
 
+  /** Argument processing */
     for (int i = 1; i != argc; i++) {
+
+    /** User requested help */
         if (strcmp(argv[i], "-h") == 0) {
             show_usage(argv[0]);
             return EXIT_SUCCESS;
         }
+
+    /** User specified number of lines as -n N */
         else if (strncmp(argv[i], "-n", 2) == 0) {
             parsed_lines = atoi(argv[++i]);
 
+            //Check that we have a valid N
+            //atoi returns 0 on error
             if (parsed_lines <= 0)
                 exit_with_error("The number of lines must be positive");
 
             lines = parsed_lines;
         }
+
+    /** User specified number of lines as -N*/
         else if (sscanf("-%i", &parsed_lines) == 1) {
             if (parsed_lines <= 0)
                 exit_with_error("The number of lines must be positive");
 
             lines = parsed_lines;
         }
+
+    /** First non option argument is filename */
+        //Check that we dont already have a filename
         else if (!filename) {
             filename = argv[i];
         }
+
+    /** Invalid command */
         else {
             show_usage(argv[0]);
             return EXIT_SUCCESS;
         }
     }
 
+  /** Check that we have a filename */
     if (filename == NULL) {
         show_usage(argv[0]);
         return EXIT_SUCCESS;
     }
 
+  /** Open input file */
     if (!(file = fopen(filename, "r")))
         exit_with_error("Error opening file");
 
+  /** Show last N lines in file */
     show_lines(file, lines);
-    fclose(file);
 
+  /** All done, exiting */
+    fclose(file);
     return EXIT_SUCCESS;;
 }
