@@ -1,3 +1,10 @@
+# Set text attributes for all text files
 * text=auto
 
-*.[ch] filter=indent
+# Apply filters to C and header files
+*.c filter=indent
+*.h filter=indent
+
+# Markdown files should use the `markdown` attribute
+*.md text diff=markdown
+
