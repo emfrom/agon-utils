@@ -319,14 +319,14 @@ int main(int argc, char *argv[]) {
         }
 
     /** User specified number of lines as -N*/
-        else if (sscanf("-%i", &parsed_lines) == 1) {
+        else if (sscanf(argv[i], "-%i", &parsed_lines) == 1) {
             if (parsed_lines <= 0)
                 exit_with_error("The number of lines must be positive");
 
             lines = parsed_lines;
         }
 
-    /** First non option argument is filename */
+    /** First non option argument is (probably) filename */
         //Check that we dont already have a filename
         else if (!filename) {
             filename = argv[i];
@@ -335,7 +335,7 @@ int main(int argc, char *argv[]) {
     /** Invalid command */
         else {
             show_usage(argv[0]);
-            return EXIT_SUCCESS;
+            return EXIT_FAILURE;
         }
     }
 
