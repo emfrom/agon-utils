@@ -1,7 +1,26 @@
+/**
+ * tail for Agon Light / MOS
+ *
+ * Show the N last lines in a textfile
+ *
+ * Original by Vasco Costa
+ * Modifications by E.M. From
+ *
+ *
+ * @file main.c
+ */ 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+
+/**
+ * Print a help message
+ * 
+ * @param param1 Name of the program 
+ * @return none
+ */
 void show_usage(char *prog_name)
 {
 	printf("Usage: %s [-hn] filename\r\n", prog_name);
@@ -9,6 +28,14 @@ void show_usage(char *prog_name)
 	printf("-n print the last n lines (default: 10)\r\n");
 }
 
+
+/**
+ * Display the last N lines from file
+ * 
+ * @param param1 File to read text from
+ * @param param2 Number of lines to display
+ * @return none
+ */
 void show_lines(FILE *file, int lines)
 {
 	char **buf = malloc(sizeof(char *) * lines);
@@ -37,6 +64,14 @@ void show_lines(FILE *file, int lines)
 	free(buf);
 }
 
+/**
+ * main using agruments
+ * Argument processing (AgDev) is not used
+ * 
+ * @param param1 Number of arguments
+ * @param param2 Array of arguments
+ * @return Exit status of the program
+ */
 int main(int argc, char *argv[])
 {
 	FILE *file = NULL;
@@ -49,7 +84,7 @@ int main(int argc, char *argv[])
 		if (strcmp(argv[i], "-h") == 0)
 		{
 			show_usage(argv[0]);
-			return 0;
+			return EXIT_SUCCESS;
 		}
 		else if (strncmp(argv[i], "-n", 2) == 0)
 		{
@@ -58,7 +93,7 @@ int main(int argc, char *argv[])
 			if (parsed_lines <= 0)
 			{
 				fprintf(stderr, "The number of lines must be positive");
-				return 1;
+				return EXIT_FAILURE;
 			}
 
 			lines = parsed_lines;
@@ -70,24 +105,24 @@ int main(int argc, char *argv[])
 		else
 		{
 			show_usage(argv[0]);
-			return 0;
+			return EXIT_SUCCESS;
 		}
 	}
 
 	if (filename == NULL)
 	{
 		show_usage(argv[0]);
-		return 0;
+		return EXIT_SUCCESS;
 	}
 
 	if (!(file = fopen(filename, "r")))
 	{
 		fprintf(stderr, "Error opening file");
-		return 1;
+		return EXIT_FAILURE;
 	}
 
 	show_lines(file, lines);
 	fclose(file);
 
-	return 0;
+	return EXIT_SUCCESS;;
 }
