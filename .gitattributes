@@ -1,3 +1,5 @@
+
 * text=auto
 
+*.[ch] filter=strip-tabs
 *.[ch] filter=indent
