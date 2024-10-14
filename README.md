@@ -1,3 +1,9 @@
+# Fork of Agon Utils
+
+https://github.com/emfrom/agon-utils
+
+Main goal of the fork is to comment all code and make some speed optimizations so that the tools are (more) usable on the Agon.
+
 # Agon Utils
 
 My own set of common utilities for MOS on the Agon Light computer. These are only loosely based on the tools for Unix-like operating systems and try to keep an extremely minimalistic set of features. Specifically the options are limited to the absolutely necessary ones.
