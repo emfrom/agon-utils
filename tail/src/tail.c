@@ -28,6 +28,19 @@ void show_usage(char *prog_name)
 	printf("-n print the last n lines (default: 10)\r\n");
 }
 
+/**
+ * Helper function to exit with an error message
+ * Makes the code a lot more readable
+ *
+ * @param param1 Message to display
+ * @return none
+ */
+void exit_with_error(char *message) {
+  fprintf(stderr,message);
+  exit(EXIT_FAILURE);
+}
+
+
 
 /**
  * Display the last N lines from file
@@ -38,30 +51,7 @@ void show_usage(char *prog_name)
  */
 void show_lines(FILE *file, int lines)
 {
-	char **buf = malloc(sizeof(char *) * lines);
 
-	for (int i = 0; i < lines; i++)
-		buf[i] = malloc(sizeof(char) * 1024);
-
-	int lc = 0;
-
-	while (fgets(buf[lc % lines], 1024, file) != NULL)
-	{
-		lc++;
-	}
-
-	int start = lc > lines ? lc % lines : 0;
-	int count = lc > lines ? lines : lc;
-
-	for (int i = 0; i < count; i++)
-	{
-		printf("%s", buf[(start + i) % lines]);
-	}
-
-	for (int i = 0; i < lines; i++)
-		free(buf[i]);
-
-	free(buf);
 }
 
 /**
@@ -91,10 +81,8 @@ int main(int argc, char *argv[])
 			parsed_lines = atoi(argv[++i]);
 
 			if (parsed_lines <= 0)
-			{
-				fprintf(stderr, "The number of lines must be positive");
-				return EXIT_FAILURE;
-			}
+			  exit_with_error("The number of lines must be positive");
+
 
 			lines = parsed_lines;
 		}
@@ -116,10 +104,8 @@ int main(int argc, char *argv[])
 	}
 
 	if (!(file = fopen(filename, "r")))
-	{
-		fprintf(stderr, "Error opening file");
-		return EXIT_FAILURE;
-	}
+	  exit_with_error("Error opening file");
+
 
 	show_lines(file, lines);
 	fclose(file);
