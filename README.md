@@ -2,7 +2,7 @@
 
 https://github.com/vascocosta/agon-utils
 
-Main goal of the fork is to comment all code and make some speed optimizations so that the tools are (more) usable on the Agon.
+Main goal of the fork is to comment all code and make some speed optimizations so that the tools are (more) usable on the Agon. In trying to keep with Vasco's vision of beginner fiendly code, the comments are excessive. This does, however, allow for some slightly more advanced code. Which is necessary to usable speed.
 
 # Agon Utils
 
