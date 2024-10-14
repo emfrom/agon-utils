@@ -9,8 +9,8 @@
  * This tail implementation uses fseek() to go to the end of the file
  * and from there read blocks backwards until it has found enough lines to print.
  *
- * The size of the blocks are guestimated by assuming 40 characters per line,
- *  making each block 40 * the number of lines to print.
+ * The size of the blocks are guestimated by assuming 20 characters per line,
+ *  making each block 20 * the number of lines to print bytes long.
  *
  * The blocks of text are stored on a stack and printed in reverse order.
  *
@@ -32,7 +32,7 @@
  * a lot of unneccesary stuff and probably not use the stack at all
  * (with the added bonus of running out of memory real quick)
  */
-#define LINE_LENGTH_GUESSTIMATE 40
+#define LINE_LENGTH_GUESSTIMATE 20
 
 
 /**
@@ -65,13 +65,13 @@ void exit_with_error(char *message) {
  *
  * The stack is the data structure to save the day
  *
- * https://en.wikipedia.org/
+ * https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
  * (or ask ChatGPT or any programming LLM to explain it)
  *
  */
 //We declare the pointer to the data structure first
-//C allows creating pointers to things it doesnt know
-// what it is, since all pointers are the same (in the CPU)
+//C allows creating pointers to types it doesnt know.
+// This is since all pointers are the same (in the CPU)
 typedef struct text_stack_s *text_stack;
 
 //That way, we can include a pointer to the data structure
