@@ -310,6 +310,12 @@ int main(int argc, char *argv[]) {
 
             lines = parsed_lines;
         }
+        else if (sscanf("-%i", &parsed_lines) == 1) {
+            if (parsed_lines <= 0)
+                exit_with_error("The number of lines must be positive");
+
+            lines = parsed_lines;
+        }
         else if (!filename) {
             filename = argv[i];
         }
