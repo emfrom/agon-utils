@@ -39,8 +39,7 @@
  * Helper funcion to print a help message
  *
  */
-void show_usage(char *prog_name)
-{
+void show_usage(char *prog_name) {
     printf("Usage: %s [-hn] filename\r\n", prog_name);
     printf("-h show this help message\r\n");
     printf("-n print the last n lines (default: 10)\r\n");
@@ -51,8 +50,7 @@ void show_usage(char *prog_name)
  * Makes the code a lot more readable
  *
  */
-void exit_with_error(char *message)
-{
+void exit_with_error(char *message) {
     fprintf(stderr, "%s\n", message);
     exit(EXIT_FAILURE);
 }
@@ -90,8 +88,7 @@ struct text_stack_s {
  *
  * i.e. add this block of text to the top of the stack
  */
-text_stack text_stack_push(text_stack stack, char *text, size_t size)
-{
+text_stack text_stack_push(text_stack stack, char *text, size_t size) {
 
   /** Allocate space */
     text_stack new_entry;
@@ -117,8 +114,7 @@ text_stack text_stack_push(text_stack stack, char *text, size_t size)
  * i.e. remove the top block of text from the stack
  *
  */
-text_stack text_stack_pop(text_stack stack, char **text, size_t *size)
-{
+text_stack text_stack_pop(text_stack stack, char **text, size_t *size) {
 
   /** Empty stack? */
     if (stack == NULL) {
@@ -147,8 +143,7 @@ text_stack text_stack_pop(text_stack stack, char **text, size_t *size)
  * Display the last N lines from file
  * 
  */
-void show_lines(FILE * file, int lines)
-{
+void show_lines(FILE * file, int lines) {
 
   /** Determine file size */
     long filesize;
@@ -296,8 +291,7 @@ void show_lines(FILE * file, int lines)
  * Argument processing (AgDev) is not used
  * 
  */
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     FILE *file = NULL;
     char *filename = NULL;
     int parsed_lines = 0;

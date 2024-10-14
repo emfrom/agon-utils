@@ -4,22 +4,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-void show_usage(char *prog_name)
-{
+void show_usage(char *prog_name) {
     printf("Usage: %s [-hi] pattern filename\r\n", prog_name);
     printf("-h show this help message\r\n");
     printf("-i case insensitive matching\r\n");
 }
 
-void to_lower(char *str)
-{
+void to_lower(char *str) {
     for (int i = 0; str[i]; i++) {
         str[i] = tolower(str[i]);
     }
 }
 
-void match_pattern(bool insensitive, char *pattern, FILE * file)
-{
+void match_pattern(bool insensitive, char *pattern, FILE * file) {
     char line[1024];
 
     while (fgets(line, sizeof(line), file)) {
@@ -34,8 +31,7 @@ void match_pattern(bool insensitive, char *pattern, FILE * file)
     }
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     FILE *file;
     bool insensitive = false;
     char *pattern = NULL;

@@ -2,15 +2,13 @@
 #include <stdio.h>
 #include <string.h>
 
-void show_usage(char *prog_name)
-{
+void show_usage(char *prog_name) {
     printf("Usage: %s [-hn] string\r\n", prog_name);
     printf("-h show this help message\r\n");
     printf("-n supress trailing newline\r\n");
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     bool newline = true;
 
     if (argc > 1) {

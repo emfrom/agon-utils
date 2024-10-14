@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-void show_usage(char *prog_name)
-{
+void show_usage(char *prog_name) {
     printf("Usage: %s [-chlw] filename\r\n", prog_name);
     printf("-c print the characters count\r\n");
     printf("-h show this help message\r\n");
@@ -11,8 +10,7 @@ void show_usage(char *prog_name)
     printf("-w print the words count\r\n");
 }
 
-unsigned count_words(char *str)
-{
+unsigned count_words(char *str) {
     int state = 0;
     unsigned wc = 0;
 
@@ -31,8 +29,7 @@ unsigned count_words(char *str)
     return wc;
 }
 
-void show_counts(FILE * file, bool lines, bool words, bool chars)
-{
+void show_counts(FILE * file, bool lines, bool words, bool chars) {
     char buf[1024];
     size_t bytes_read;
     int lc = 0;
@@ -72,8 +69,7 @@ void show_counts(FILE * file, bool lines, bool words, bool chars)
     printf("\r\n");
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     FILE *file = NULL;
     char *filename = NULL;
     bool lines = false;

@@ -2,15 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-void show_usage(char *prog_name)
-{
+void show_usage(char *prog_name) {
     printf("Usage: %s [-hn min-len] filename\r\n", prog_name);
     printf("-h show this help message\r\n");
     printf("-n strings at least min-len long (default: 4)\r\n");
 }
 
-void show_str(size_t str_len, FILE * file)
-{
+void show_str(size_t str_len, FILE * file) {
     char ch;
     char buf[1024];
     size_t cur_len = 0;
@@ -30,8 +28,7 @@ void show_str(size_t str_len, FILE * file)
     }
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     FILE *file = NULL;
     char *filename = NULL;
     int parsed_len = 0;

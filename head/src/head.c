@@ -2,15 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-void show_usage(char *prog_name)
-{
+void show_usage(char *prog_name) {
     printf("Usage: %s [-hn] filename\r\n", prog_name);
     printf("-h show this help message\r\n");
     printf("-l print the first n lines (default: 10)\r\n");
 }
 
-void show_lines(FILE * file, int lines)
-{
+void show_lines(FILE * file, int lines) {
     char buf[1024];
     int lc = 0;
 
@@ -20,8 +18,7 @@ void show_lines(FILE * file, int lines)
     }
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
     FILE *file = NULL;
     char *filename = NULL;
     int parsed_lines = 0;
