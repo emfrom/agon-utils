@@ -83,7 +83,7 @@ int main (int argc, char *argv[])
         }
     }
 
-  /** Print a newline if needed */
+  /** Print a newline if wanted */
     if (newline)
     {
         printf ("\r\n");
