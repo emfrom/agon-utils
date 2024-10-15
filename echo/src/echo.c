@@ -1,7 +1,24 @@
+/**
+ * echo for Agon Light
+ *
+ * Prints arguments to stdout
+ *
+ * Original by Vasco Costa
+ * Modifications by E.M. From
+ *
+ * Very straight forward. Options recognized are -n to not add a newline to output
+ * and -h for help
+ *
+ */
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
+/**
+ * Helper funcion to print a help message
+ *
+ */
 void show_usage (char *prog_name)
 {
     printf ("Usage: %s [-hn] string\r\n", prog_name);
@@ -9,10 +26,16 @@ void show_usage (char *prog_name)
     printf ("-n supress trailing newline\r\n");
 }
 
+/**
+ * main() using arguments
+ * Extended argument processing (AgDev) is not used
+ * 
+ */
 int main (int argc, char *argv[])
 {
     bool newline = true;
 
+  /** Loop over all arguments */
     if (argc > 1)
     {
         for (int i = 1; i < argc; i++)
@@ -40,6 +63,7 @@ int main (int argc, char *argv[])
         }
     }
 
+  /** Print a newline if needed */
     if (newline)
     {
         printf ("\r\n");
