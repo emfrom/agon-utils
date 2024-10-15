@@ -39,10 +39,11 @@
  * Helper funcion to print a help message
  *
  */
-void show_usage(char *prog_name) {
-    printf("Usage: %s [-hn] filename\r\n", prog_name);
-    printf("-h show this help message\r\n");
-    printf("-n print the last n lines (default: 10)\r\n");
+void show_usage (char *prog_name)
+{
+    printf ("Usage: %s [-hn] filename\r\n", prog_name);
+    printf ("-h show this help message\r\n");
+    printf ("-n print the last n lines (default: 10)\r\n");
 }
 
 /**
@@ -50,9 +51,10 @@ void show_usage(char *prog_name) {
  * Makes the code a lot more readable
  *
  */
-void exit_with_error(char *message) {
-    fprintf(stderr, "%s\n", message);
-    exit(EXIT_FAILURE);
+void exit_with_error (char *message)
+{
+    fprintf (stderr, "%s\n", message);
+    exit (EXIT_FAILURE);
 }
 
 /**
@@ -74,7 +76,8 @@ typedef struct text_stack_s *text_stack;
 
 //That way, we can include a pointer to the data structure
 // inside the structure itself. Very handy.
-struct text_stack_s {
+struct text_stack_s
+{
     //Pointer to the entry below us on the stack
     text_stack below_this;
 
@@ -88,14 +91,15 @@ struct text_stack_s {
  *
  * i.e. add this block of text to the top of the stack
  */
-text_stack text_stack_push(text_stack stack, char *text, size_t size) {
+text_stack text_stack_push (text_stack stack, char *text, size_t size)
+{
 
   /** Allocate space */
     text_stack new_entry;
 
-    new_entry = malloc(sizeof(struct text_stack_s));
+    new_entry = malloc (sizeof (struct text_stack_s));
     if (new_entry == NULL)
-        exit_with_error("Could not allocate memory");
+        exit_with_error ("Could not allocate memory");
 
   /** Assign variables */
     //The old top of the stack is now below what we just added
@@ -114,10 +118,12 @@ text_stack text_stack_push(text_stack stack, char *text, size_t size) {
  * i.e. remove the top block of text from the stack
  *
  */
-text_stack text_stack_pop(text_stack stack, char **text, size_t *size) {
+text_stack text_stack_pop (text_stack stack, char **text, size_t *size)
+{
 
   /** Empty stack? */
-    if (stack == NULL) {
+    if (stack == NULL)
+    {
         return NULL;
     }
 
@@ -133,7 +139,7 @@ text_stack text_stack_pop(text_stack stack, char **text, size_t *size) {
     text_stack temp;
 
     temp = stack->below_this;
-    free(stack);
+    free (stack);
 
   /** Return the new top of the stack */
     return temp;
@@ -143,21 +149,22 @@ text_stack text_stack_pop(text_stack stack, char **text, size_t *size) {
  * Display the last N lines from file
  * 
  */
-void show_lines(FILE * file, int lines) {
+void show_lines (FILE * file, int lines)
+{
 
   /** Determine file size */
     long filesize;
 
     //Move read pointer to end of file
-    if (0 != fseek(file, 0L, SEEK_END))
-        exit_with_error("Filesystem error");
+    if (0 != fseek (file, 0L, SEEK_END))
+        exit_with_error ("Filesystem error");
 
     //Get the file position we are at
     // since we are at the end of the fils,
     // position is equal to the size of the file
-    filesize = ftell(file);
+    filesize = ftell (file);
     if (filesize == -1)
-        exit_with_error("Filesystem error");
+        exit_with_error ("Filesystem error");
 
   /** Implicit newline at end of file? */
     // If last char is not a newline, we add one so that
@@ -165,11 +172,12 @@ void show_lines(FILE * file, int lines) {
     int implicit_newline = 0;
 
     //Move read pointer to last character in file
-    if (0 != fseek(file, -1L, SEEK_END))
-        exit_with_error("Filesystem error");
+    if (0 != fseek (file, -1L, SEEK_END))
+        exit_with_error ("Filesystem error");
 
     //Check last character
-    if (fgetc(file) != '\n') {
+    if (fgetc (file) != '\n')
+    {
         // As the last line will not count as a line in the code
         //  below, remove one line to look for
         lines--;
@@ -198,7 +206,8 @@ void show_lines(FILE * file, int lines) {
 
   /** Loop until we have as many lines as we want 
       OR we run out of file to load */
-    while (line_endings_found <= lines && size_loaded < filesize) {
+    while (line_endings_found <= lines && size_loaded < filesize)
+    {
 
         //Check that there is enough text left in the file
         // for us to load an entire block
@@ -209,17 +218,17 @@ void show_lines(FILE * file, int lines) {
     /** Allocate a buffer */
         char *text_buffer;
 
-        text_buffer = malloc(loadsize);
+        text_buffer = malloc (loadsize);
         if (text_buffer == NULL)
-            exit_with_error("Could not allocate memory");
+            exit_with_error ("Could not allocate memory");
 
     /** Reposition the read point in the file */
-        if (0 != fseek(file, 0L - (size_loaded + loadsize), SEEK_END))
-            exit_with_error("Filesystem error");
+        if (0 != fseek (file, 0L - (size_loaded + loadsize), SEEK_END))
+            exit_with_error ("Filesystem error");
 
     /** Fill the buffer from file */
-        if (1 != fread(text_buffer, loadsize, 1, file))
-            exit_with_error("Filesystem error");
+        if (1 != fread (text_buffer, loadsize, 1, file))
+            exit_with_error ("Filesystem error");
 
         //Update how much we have loaded
         size_loaded += loadsize;
@@ -238,7 +247,7 @@ void show_lines(FILE * file, int lines) {
 
     /** Push onto the stack */
         // i.e. put this block on the top
-        stack = text_stack_push(stack, text_buffer, loadsize);
+        stack = text_stack_push (stack, text_buffer, loadsize);
 
     }
 
@@ -251,22 +260,24 @@ void show_lines(FILE * file, int lines) {
 
   /** Print the lines found */
     // NULL mean the stack is empty
-    while (stack != NULL) {
+    while (stack != NULL)
+    {
 
     /** Get the text block to print from the stack */
         char *text;
         size_t size;
 
-        stack = text_stack_pop(stack, &text, &size);
+        stack = text_stack_pop (stack, &text, &size);
 
     /** Check if we are printing the first block */
         // If offset is non-zero, this is the first block
         // and we offset printing so that only the lines
         // that we want are printed
-        if (offset) {
+        if (offset)
+        {
             //Print with fwrite because it's (probably) faster
-            if (1 != fwrite(text + offset, size - offset, 1, stdout))
-                exit_with_error("Standard output error");
+            if (1 != fwrite (text + offset, size - offset, 1, stdout))
+                exit_with_error ("Standard output error");
 
             //offset = 0 means the rest of the blocks will be printed
             // as is
@@ -274,16 +285,16 @@ void show_lines(FILE * file, int lines) {
         }
         else
             //For blocks other than the first block, print everything
-        if (1 != fwrite(text, size, 1, stdout))
-            exit_with_error("Standard output error");
+        if (1 != fwrite (text, size, 1, stdout))
+            exit_with_error ("Standard output error");
 
     /** Free up the text buffer */
-        free(text);
+        free (text);
     }
 
   /** Write implicit newline, if needed */
     if (implicit_newline)
-        printf("\n");
+        printf ("\n");
 }
 
 /**
@@ -291,68 +302,76 @@ void show_lines(FILE * file, int lines) {
  * Extended argument processing (AgDev) is not used
  * 
  */
-int main(int argc, char *argv[]) {
+int main (int argc, char *argv[])
+{
     FILE *file = NULL;
     char *filename = NULL;
     int parsed_lines = 0;
     size_t lines = 10;
 
   /** Argument processing */
-    for (int i = 1; i != argc; i++) {
+    for (int i = 1; i != argc; i++)
+    {
 
     /** User requested help */
-        if (strcmp(argv[i], "-h") == 0) {
-            show_usage(argv[0]);
+        if (strcmp (argv[i], "-h") == 0)
+        {
+            show_usage (argv[0]);
             return EXIT_SUCCESS;
         }
 
     /** User specified number of lines as -n N */
-        else if (strncmp(argv[i], "-n", 2) == 0) {
-            parsed_lines = atoi(argv[++i]);
+        else if (strncmp (argv[i], "-n", 2) == 0)
+        {
+            parsed_lines = atoi (argv[++i]);
 
             //Check that we have a valid N
             //atoi returns 0 on error
             if (parsed_lines <= 0)
-                exit_with_error("The number of lines must be positive");
+                exit_with_error ("The number of lines must be positive");
 
             lines = parsed_lines;
         }
 
     /** User specified number of lines as -N*/
-        else if (sscanf(argv[i], "-%i", &parsed_lines) == 1) {
+        else if (sscanf (argv[i], "-%i", &parsed_lines) == 1)
+        {
             if (parsed_lines <= 0)
-                exit_with_error("The number of lines must be positive");
+                exit_with_error ("The number of lines must be positive");
 
             lines = parsed_lines;
         }
 
     /** First non option argument is (probably) filename */
         //Check that we dont already have a filename
-        else if (!filename) {
+        else if (!filename)
+        {
             filename = argv[i];
         }
 
     /** Invalid command */
-        else {
-            show_usage(argv[0]);
+        else
+        {
+            show_usage (argv[0]);
             return EXIT_FAILURE;
         }
     }
 
   /** Check that we have a filename */
-    if (filename == NULL) {
-        show_usage(argv[0]);
+    if (filename == NULL)
+    {
+        show_usage (argv[0]);
         return EXIT_SUCCESS;
     }
 
   /** Open input file */
-    if (!(file = fopen(filename, "r")))
-        exit_with_error("Error opening file");
+    if (!(file = fopen (filename, "r")))
+        exit_with_error ("Error opening file");
 
   /** Show last N lines in file */
-    show_lines(file, lines);
+    show_lines (file, lines);
 
   /** All done, exiting */
-    fclose(file);
+    fclose (file);
     return EXIT_SUCCESS;;
 }
