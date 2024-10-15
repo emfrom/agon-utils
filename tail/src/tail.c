@@ -298,7 +298,7 @@ void show_lines (FILE * file, int lines)
 
 /**
  * main() using arguments
- * Extended argument processing (AgDev) is not used
+ * Extended argument processing (AgDev) is used
  * 
  */
 int main (int argc, char *argv[])

@@ -30,7 +30,7 @@ void show_usage (char *prog_name)
 
 /**
  * main() using arguments
- * Extended argument processing (AgDev) is not used
+ * Extended argument processing (AgDev) is used
  * 
  */
 int main (int argc, char *argv[])
