@@ -4,4 +4,11 @@ head/bin/*
 strings/*
 tail/bin/*
 wc/bin/*
-
+keyb/bin/*
+echo/obj/*
+grep/obj/*
+head/obj/*
+strings/*
+tail/obj/*
+wc/obj/*
+keyb/obj/*
