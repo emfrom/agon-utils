@@ -36,7 +36,10 @@ void show_usage (char *prog_name)
     printf ("17    DV     Dvorak\n");
 }
 
-/** Short names of the layouts */
+/**
+ * Short names of the layouts
+ *
+ */
 const char *layout_names[] = {
     "UK",
     "US",
@@ -59,7 +62,7 @@ const char *layout_names[] = {
 };
 
 /** Number of layouts currenty supported */
-const int number_layouts = 18;
+const int number_of_layouts = 18;
 
 /**
  * main() using arguments
@@ -68,6 +71,10 @@ const int number_layouts = 18;
  */
 int main (int argc, char *argv[])
 {
+    printf ("%d\n", number_of_layouts);
+    exit (0);
+
+
     //Check if we have and argument
     if (argc != 2)
     {
@@ -79,15 +86,16 @@ int main (int argc, char *argv[])
     int locale = -1;
 
   /** Parse arguments */
-    //First by short name
-    for (int i = 0; i < number_layouts; i++)
+    for (int i = 0; i < number_of_layouts; i++)
     {
+        //First by short name
         if (0 == strcmp (argv[1], layout_names[i]))
         {
             locale = i;
             break;
         }
 
+        //Then by number
         char number[3];
         sprintf (number, "%d", i);
 
