@@ -36,6 +36,7 @@ void show_usage (char *prog_name)
  */
 int main (int argc, char *argv[])
 {
+
     //Add newline to end of printout
     bool newline = true;
 
@@ -60,7 +61,7 @@ int main (int argc, char *argv[])
     for (int i = 1; i < argc; i++)
     {
       /** Check if it's an option */
-        //Do this by seeing if the first letter of argument i is a -
+        //See if the first letter of argument i is a -
         if (*argv[i] != '-')
         {
             //Nope, the rest is stuff to print
@@ -70,7 +71,7 @@ int main (int argc, char *argv[])
 
       /** Handle the options */
         //Get the second letter from the pointer argv[i]
-        switch (*(argv[1] + 1))
+        switch (*(argv[i] + 1))
         {
             //Omit trailing newline
         case 'n':
@@ -283,7 +284,7 @@ int main (int argc, char *argv[])
 
                 //Recalculate string length
                 string_length -= rest_of_string - temp;
-                string_length++;        //Correction for previous subtraction
+                string_length += 2;     //Correction
                 break;
 
                 // \xNN hex number
@@ -310,7 +311,7 @@ int main (int argc, char *argv[])
 
                 //Recalculate string length
                 string_length -= rest_of_string - temp;
-                string_length++;        //Correction for previous subtraction
+                string_length += 2;     //Correction
                 break;
 
             /** Invalid escape code */
