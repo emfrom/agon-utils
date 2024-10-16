@@ -1,3 +1,4 @@
+
 /**
  * echo for Agon Light
  *
@@ -38,7 +39,7 @@ int main (int argc, char *argv[])
     //Add newline to end of printout
     bool newline = true;
 
-    //Start on which argument
+    //Where to start echo:ing
     int first_arg_toprint = 1;
 
   /** Check if we have arguments */
@@ -49,29 +50,53 @@ int main (int argc, char *argv[])
         return EXIT_SUCCESS;
     }
 
-  /** Check for "-" in first argument */
-    if (*argv[1] == '-')
+  /** Check for "-" in leading arguments */
+    //For echo it's important that it's only leading argument
+    // since the user might want to echo something like "Type -n for ..."
+    for (int i = 1; i < argc; i++)
     {
-        //Check if it's -n
-        if (tolower (*(argv[1] + 1)) == 'n')
-        {                       //*(argv[1] + ) means 2nd letter in argv[1]
-            newline = false;
-        }
-        else
+      /** Check if it's an option */
+        //Do this by seeing if the first letter of argument i is a -
+        if (*argv[i] != '-')
         {
-            //Any other letter after - means show help
-            // If it's h, user wanted to see help
-            // If it's something else, we dont support that
-            show_usage (argv[0]);
-            return EXIT_SUCCESS;
+            //Nope, move on to printing
+            first_arg_toprint = i;
+            break;
         }
 
-        //Start printing from 2nd argument
-        first_arg_toprint = 2;
+      /** Get the option letter */
+        char option;
+        //Get the second letter from the pointer argv[i]
+        option = *(argv[i] + 1);
+        //Change to lowercase
+        option = tolower (option);
+
+
+      /** Handle the options */
+        switch (option)
+        {
+            //Omit trailing newline
+        case n:
+            newline = false;
+            break;;
+
+            //Any other char means show help
+            // h, user wanted to see help
+        case h:
+            show_usage (argv[0]);
+            return EXIT_SUCCESS;
+
+            // something else, we dont support that
+        default:
+            show_usage (argv[0]);
+            return EXIT_FAILUTE;
+        }
     }
 
 
   /** Print the remaining arguments */
+    //If argc == first_arg_toprint this will not be run
+    // i.e. nothing to print
     for (int i = first_arg_toprint; i < argc; i++)
     {
         printf ("%s", argv[i]);
