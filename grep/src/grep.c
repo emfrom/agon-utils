@@ -140,50 +140,71 @@ int main (int argc, char *argv[])
     char *pattern = NULL;
     char *filename = NULL;
 
+  /** Argument processing */
     for (int i = 1; i != argc; i++)
     {
+      /** User requested help */
         if (strcmp (argv[i], "-h") == 0)
         {
             show_usage (argv[0]);
 
-            return 0;
+            return EXIT_SUCCESS;
         }
+
+      /** User wants case insensitive search */
         else if (strcmp (argv[i], "-i") == 0)
         {
             insensitive = true;
         }
+
+      /** Fist non option is pattern to search for */
         else if (!pattern)
         {
             pattern = argv[i];
         }
+      /** Second non option is filename */
         else if (!filename)
         {
             filename = argv[i];
         }
+      /** Too many arguments */
         else
         {
             show_usage (argv[0]);
 
-            return 0;
+            return EXIT_FAILURE;
         }
+
     }
 
-    if (pattern == NULL || filename == NULL)
+  /** Verify we have a pattern */
+    if (pattern == NULL)
     {
         show_usage (argv[0]);
 
-        return 0;
+        return EXIT_FAILURE;;
     }
 
-    if (!(file = fopen (filename, "r")))
+  /** Open text source */
+    if (filename == NULL)
+    {
+        //No filename means read from stdin
+        file = stdin;
+    }
+    else if ((file = fopen (filename, "r")) == NULL)
     {
         fprintf (stderr, "Error opening file");
-
-        return 1;
+        return EXIT_FAILURE;
     }
 
+
+  /** Search file for patterns */
     match_pattern (insensitive, pattern, file);
+
+
+    //Finish up
     fclose (file);
 
-    return 0;
+  /** All done, exiting */
+    return EXIT_SUCCESS;
 }
