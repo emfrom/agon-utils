@@ -1,7 +1,22 @@
+/**
+ * wc for Agon Light
+ *
+ * Count characters, words and/or lines in a file
+ *
+ * Original by Vasco Costa
+ * Modifications by E.M. From
+ */
+
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <string.h>
 
+
+/**
+ * Helper funcion to print a help message
+ *
+ */
 void show_usage (char *prog_name)
 {
     printf ("Usage: %s [-chlw] filename\r\n", prog_name);
